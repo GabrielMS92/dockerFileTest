@@ -25,10 +25,10 @@ Projeto de RAG (Retrieval-Augmented Generation) com LangChain e Google Gemini. U
 
 3. Configure a variável de ambiente da API do Google Gemini.
 
-	Crie um arquivo `.env` na raiz do projeto com o mesmo nome usado pelo código:
+	Crie um arquivo `.env` na raiz do projeto usando um dos nomes aceitos pelo código. O recomendado é `GOOGLE_API_KEY`:
 
 	```env
-	CHAVE_API_GOOGLE=cole_sua_chave_aqui
+	GOOGLE_API_KEY=cole_sua_chave_aqui
 	```
 
 4. Suba o PostgreSQL usando uma imagem do Docker que já venha com `pgvector`.
@@ -53,6 +53,8 @@ Projeto de RAG (Retrieval-Augmented Generation) com LangChain e Google Gemini. U
     ```
 
     Se você usar outro usuário, senha, host ou banco, ajuste o valor em `consume_api/rag_core.py` e no script de carga.
+
+	Se preferir usar `.env`, o app também aceita `GEMINI_API_KEY` e `CHAVE_API_GOOGLE`, mas `GOOGLE_API_KEY` é o nome que já funciona com o comando Docker abaixo.
 
 5. Crie o banco e a tabela esperados pelo projeto, caso ainda não existam.
 

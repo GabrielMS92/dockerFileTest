@@ -9,8 +9,15 @@ from pydantic import SecretStr
 import os
 
 load_dotenv()
-raw_api = os.getenv("CHAVE_API_GOOGLE")
-api_key = SecretStr(raw_api) if raw_api else None
+
+
+def _get_google_api_key():
+    raw_api = (
+        os.getenv("GOOGLE_API_KEY")
+        or os.getenv("GEMINI_API_KEY")
+        or os.getenv("CHAVE_API_GOOGLE")
+    )
+    return SecretStr(raw_api) if raw_api else None
 
 
 def criar_rag_chain():
@@ -20,6 +27,7 @@ def criar_rag_chain():
     """
 
     # 1. Criar modelo de embeddings (só para busca, não para inserir)
+    api_key = _get_google_api_key()
     embedding_model = GoogleGenerativeAIEmbeddings(
         model="gemini-embedding-2",
         api_key=api_key
@@ -39,7 +47,7 @@ def criar_rag_chain():
     # 3. Criar LLM
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
-        google_api_key=os.getenv("CHAVE_API_GOOGLE"),
+        google_api_key=api_key,
         temperature=0.4
     )
 
